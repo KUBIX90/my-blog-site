@@ -1,0 +1,39 @@
+package templates
+
+import "github.com/KUBIX90/my-blog-site.git/internal/posts"
+
+templ Home() {
+	@layout("Home", posts.GetPosts())
+}
+
+templ layout(name string, posts []*posts.Post) {
+	<html>
+		<head><title>{ name }</title></head>
+		<body>
+			@headerTemplate(name)
+			<div><h1>Articles</h1></div>
+			<main>
+				<ul>
+					for _, p := range posts {
+						<li>{ p.Title }</li>
+						<p>{ p.Content }</p>
+					}
+				</ul>
+			</main>
+		</body>
+	</html>
+}
+
+templ headerTemplate(name string) {
+	<header data-testid="headerTemplate">
+		<div>
+			<h2>{ name }</h2>
+		</div>
+		<nav>
+			<ul>
+				<li><a href="/">About Me</a></li>
+				<li><a href="/blog">Blog</a></li>
+			</ul>
+		</nav>
+	</header>
+}
